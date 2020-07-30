@@ -1,5 +1,5 @@
 # Convolutoinal-Neural-Networks
-## ML Learner's Space course and Deep Learning
+## ML Learner's Space course and Deep_Lizard YouTube video playlist.
 
 Convolutional Neural Networks(CNN) or ConvNet are type of neural networks specifically taking inputs as images.It has the same function to optimize the weights and biases like the neural networks.
 Now let's say you were to do the same process described above, but with image pixel values as your input. Considering even a small image, of say 50x50 pixels, number of input variables will be equal to 2500. And lets say you are mapping these input pixel values to a fully connected layer with 1000 elements. Obviously, you cannot directly map the input to a smaller feature space, since that will result in a lot of image features not getting learnt by your model, defeating the purpose of using a DNN. So, the number of parameters for this layer is equal to 2500 x 1000 = 2,500,000. The number of parameters already cross a million and imagine what will happen with more layers. The total number of parameters to be trained will be huge! And remember, this is just for a 50x50 pixel input image. What if you were to use a 1024x1024 sized image? The training time for your model will be even larger this time and hence using fully connected layers is not an efficient approach to deal with image inputs.
@@ -78,5 +78,35 @@ For numpy implementation, refer [this article](https://cs231n.github.io/convolut
 
 A common setting of the hyperparameters is F=3,S=1,P=1
 
-Do check out [Convolutional Demo](https://cs231n.github.io/convolutional-networks/#conv)
+Do check out [Convolutional Demo](https://cs231n.github.io/convolutional-networks/#conv).
+
 Also, if you wish to see the backprop and matrix multiplication concepts of CNN, do check out the same article further.
+
+### Pooling Layer
+A pooling layer is particularly inserted after a convolutional layer.Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting. The Pooling Layer operates independently on every depth slice of the input and resizes it spatially, using the MAX operation.More generally, the pooling layer:
+- Accepts a volume of size W1×H1×D1
+- Requires two hyperparameters:
+  - their spatial extent F
+  - the stride S
+- Produces a volume of size W2×H2×D2
+   where:
+   - W2=(W1−F)/S+1
+   - H2=(H1−F)/S+1
+   - D2=D1
+- Introduces zero parameters since it computes a fixed function of the input
+- For Pooling layers, it is not common to pad the input using zero-padding.
+
+![max pooling](https://user-images.githubusercontent.com/22738317/34081046-c3a97518-e347-11e7-98fe-929f602ee857.png)
+
+**General Pooling** : In addition to max pooling, various other pooling methods can be implemented such as _average pooling_ or even _L2-norm pooling_.
+Pooling layer downsamples the volume spatially, independently in each depth slice of the input volume.
+
+Backpropagation. Recall from the backpropagation chapter that the backward pass for a max(x, y) operation has a simple interpretation as only routing the gradient to the input that had the highest value in the forward pass. Hence, during the forward pass of a pooling layer it is common to keep track of the index of the max activation (sometimes also called the switches) so that gradient routing is efficient during backpropagation.
+
+**Getting rid of pooling**:Discarding pooling layers has also been found to be important in training good generative models, such as variational autoencoders (VAEs) or generative adversarial networks (GANs). It seems likely that future architectures will feature very few to no pooling layers.
+While Downsampling ,we can spatially reduce the size in convolutional layer itself in such type of models.
+
+
+
+
+
